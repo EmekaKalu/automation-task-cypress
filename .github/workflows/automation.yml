@@ -1,0 +1,28 @@
+name: End-to-end tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+jobs:
+  cypress-run:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          spec: |
+               cypress/e2e/login_test.cy.js
+          headed: true
+        
+        env:
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+          SAUCE_URL: ${{ secrets.SAUCE_URL }}
+
+          
+          
